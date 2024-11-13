@@ -4,8 +4,9 @@ import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        ExecutorService service = Executors.newFixedThreadPool(10);
+        ExecutorService service = Executors.newFixedThreadPool(100);
         List<Future<Integer>> futures = new ArrayList<>();
+        long startTime = System.nanoTime();  // Capture start time
 
         for (int i = 0; i < 1000; i++) {
             Callable<Integer> task = new Callable<Integer>() {
@@ -30,5 +31,10 @@ public class Main {
 
 
         service.shutdown();
+        long endTime = System.nanoTime();  // Capture end time
+
+        // Calculate elapsed time in seconds and nanoseconds
+        long elapsedTime = endTime - startTime;
+        System.out.println("Total execution time: " + elapsedTime / 1_000_000 + " milliseconds");
     }
 }
